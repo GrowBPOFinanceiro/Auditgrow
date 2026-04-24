@@ -203,6 +203,10 @@
         let discrepancies = [];
         let summaryByGroup = {};
 
+        // Cores Grow BPO para os PDFs
+        const growDark = [15, 23, 42]; // Slate 900 (Azul/Cinza bem escuro)
+        const growAccent = [37, 99, 235]; // Blue 600 (Azul vibrante, de confiança)
+
         const fileInput = document.getElementById('fileInput');
         const emptyState = document.getElementById('emptyState');
         const dashboard = document.getElementById('dashboard');
@@ -493,6 +497,58 @@
             dashboard.classList.remove('hidden');
         }
 
+        // Função auxiliar para desenhar as caixinhas de stats no PDF
+        function drawStatsCards(doc, startY, isLandscape) {
+            const stats = [
+                { label: "Faturamento Bruto", val: document.getElementById('statGross').innerText, color: [71, 85, 105] }, // Slate 500
+                { label: "Faturamento Liquido", val: document.getElementById('statNet').innerText, color: [22, 163, 74] },  // Green 600
+                { label: "Total Pago MDR", val: document.getElementById('statMdr').innerText, color: [234, 88, 12] },      // Orange 600
+                { label: "Total Antecipacao", val: document.getElementById('statAnticipation').innerText, color: [147, 51, 234] } // Purple 600
+            ];
+
+            let x = 14;
+            let y = startY;
+
+            if (isLandscape) {
+                // 4 blocos em linha na paisagem (Total 269mm utilizaveis)
+                stats.forEach(s => {
+                    doc.setDrawColor(226, 232, 240); // Borda
+                    doc.setFillColor(248, 250, 252); // Fundo clarinho
+                    doc.roundedRect(x, y, 64, 20, 3, 3, 'FD');
+                    doc.setFontSize(9);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(s.label, x + 4, y + 7);
+                    doc.setFontSize(12);
+                    doc.setFont("helvetica", "bold");
+                    doc.setTextColor(s.color[0], s.color[1], s.color[2]);
+                    doc.text(s.val, x + 4, y + 15);
+                    doc.setFont("helvetica", "normal");
+                    x += 68; // gap
+                });
+            } else {
+                // Grade 2x2 no formato retrato (Total 182mm utilizaveis)
+                stats.forEach((s, index) => {
+                    doc.setDrawColor(226, 232, 240); 
+                    doc.setFillColor(248, 250, 252); 
+                    doc.roundedRect(x, y, 88, 22, 3, 3, 'FD');
+                    doc.setFontSize(10);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(s.label, x + 5, y + 8);
+                    doc.setFontSize(14);
+                    doc.setFont("helvetica", "bold");
+                    doc.setTextColor(s.color[0], s.color[1], s.color[2]);
+                    doc.text(s.val, x + 5, y + 17);
+                    doc.setFont("helvetica", "normal");
+                    
+                    x += 94; // gap lateral
+                    if (index === 1) { // Quebra a linha após o segundo item
+                        x = 14;
+                        y += 26; // gap vertical
+                    }
+                });
+            }
+        }
+
         async function generateDivergencePDF() {
             if(discrepancies.length === 0) return;
 
@@ -502,17 +558,30 @@
             const clientName = document.getElementById('displayClientName').innerText;
             const period = document.getElementById('salesPeriod').innerText;
 
-            doc.setFontSize(18);
-            doc.setTextColor(0, 51, 34); 
-            doc.text("RELATÓRIO DE CONTESTAÇÃO DE TAXAS - AUDITGROW STONE", 14, 22);
+            // Header com Cores Grow BPO
+            doc.setFontSize(22);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(growDark[0], growDark[1], growDark[2]); 
+            doc.text("Relatório de Divergências de Taxas", 14, 22);
             
+            doc.setFontSize(12);
+            doc.setTextColor(growAccent[0], growAccent[1], growAccent[2]);
+            doc.text("AUDITGROW by Grow BPO", 14, 30);
+
+            doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
             doc.setTextColor(100, 100, 100);
-            doc.text(`Cliente: ${clientName}`, 14, 30);
-            doc.text(`Período Analisado: ${period}`, 14, 35);
-            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 40);
-            doc.text(`Total de Transações Divergentes: ${discrepancies.length}`, 14, 45);
-            doc.text(`Prejuízo Financeiro Estimado nas Transações Listadas: ${document.getElementById('totalImpact').innerText}`, 14, 50);
+            doc.text(`Cliente: ${clientName}`, 14, 40);
+            doc.text(`Período Analisado: ${period}`, 14, 45);
+            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 50);
+            
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(200, 0, 0); // Red
+            doc.text(`Prejuízo Estimado: ${document.getElementById('totalImpact').innerText}`, 150, 50);
+            doc.setFont("helvetica", "normal");
+
+            // Desenhar os Cards do Dashboard
+            drawStatsCards(doc, 58, true);
 
             const tableData = discrepancies.map(d => [
                 d.date,
@@ -525,11 +594,11 @@
             ]);
 
             doc.autoTable({
-                startY: 55,
+                startY: 85,
                 head: [['Data', 'Bandeira / Produto', 'Valor Bruto', 'Valor Líquido', 'Taxa Contrato', 'Taxa Praticada', 'Diferença Cobrada (R$)']],
                 body: tableData,
-                theme: 'striped',
-                headStyles: { fillColor: [0, 51, 34], textColor: [255,255,255] },
+                theme: 'grid',
+                headStyles: { fillColor: growDark, textColor: [255,255,255] },
                 styles: { fontSize: 8, cellPadding: 3 },
                 columnStyles: {
                     2: { halign: 'right' },
@@ -550,27 +619,25 @@
             const clientName = document.getElementById('displayClientName').innerText;
             const period = document.getElementById('salesPeriod').innerText;
 
-            doc.setFontSize(18);
-            doc.setTextColor(0, 180, 70); // Verde Sucesso
-            doc.text("RELATÓRIO DE AUDITORIA - CONFORMIDADE DE TAXAS", 14, 22);
+            // Header com Cores Grow BPO
+            doc.setFontSize(22);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(growDark[0], growDark[1], growDark[2]); 
+            doc.text("Relatório de Conformidade de Taxas", 14, 22);
             
+            doc.setFontSize(12);
+            doc.setTextColor(growAccent[0], growAccent[1], growAccent[2]);
+            doc.text("AUDITGROW by Grow BPO", 14, 30);
+            
+            doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
             doc.setTextColor(100, 100, 100);
-            doc.text(`Cliente: ${clientName}`, 14, 30);
-            doc.text(`Período Analisado: ${period}`, 14, 35);
-            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 40);
+            doc.text(`Cliente: ${clientName}`, 14, 40);
+            doc.text(`Período Analisado: ${period}`, 14, 45);
+            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 50);
             
-            // Resumo Financeiro
-            doc.setFontSize(14);
-            doc.setTextColor(0, 51, 34);
-            doc.text("Resumo Financeiro", 14, 55);
-
-            doc.setFontSize(11);
-            doc.setTextColor(50, 50, 50);
-            doc.text(`Faturamento Bruto: ${document.getElementById('statGross').innerText}`, 14, 65);
-            doc.text(`Faturamento Líquido: ${document.getElementById('statNet').innerText}`, 14, 72);
-            doc.text(`Total Pago em MDR: ${document.getElementById('statMdr').innerText}`, 14, 79);
-            doc.text(`Total Antecipação: ${document.getElementById('statAnticipation').innerText}`, 14, 86);
+            // Desenhar os Cards do Dashboard (Grade 2x2)
+            drawStatsCards(doc, 60, false);
 
             // Tabela de Resumo de Taxas
             const summaryData = Object.keys(summaryByGroup).map(key => {
@@ -586,33 +653,35 @@
             });
 
             doc.autoTable({
-                startY: 100,
+                startY: 120,
                 head: [['Bandeira / Produto', 'Taxa de Contrato', 'Taxa Efetiva', 'Status']],
                 body: summaryData,
-                theme: 'striped',
-                headStyles: { fillColor: [0, 180, 70], textColor: [255,255,255] },
+                theme: 'grid',
+                headStyles: { fillColor: growDark, textColor: [255,255,255] },
                 styles: { fontSize: 10, cellPadding: 4 },
                 columnStyles: {
                     1: { halign: 'center' },
                     2: { halign: 'center' },
-                    3: { halign: 'center', textColor: [0, 150, 50], fontStyle: 'bold' } 
+                    3: { halign: 'center', textColor: [22, 163, 74], fontStyle: 'bold' } // Verde para sucesso
                 }
             });
 
-            // Mensagem da Grow BPO
-            const finalY = doc.lastAutoTable.finalY + 25;
+            // Card da Grow BPO (Mensagem Final)
+            const finalY = doc.lastAutoTable.finalY + 20;
+            
+            // Desenhar Caixa de Destaque
+            doc.setDrawColor(growAccent[0], growAccent[1], growAccent[2]); // Borda Azul Vibrante
+            doc.setFillColor(240, 247, 255); // Fundo azul bem clarinho
+            doc.roundedRect(14, finalY, 182, 30, 4, 4, 'FD');
+
             doc.setFontSize(11);
-            doc.setTextColor(0, 51, 34);
+            doc.setTextColor(growDark[0], growDark[1], growDark[2]);
             doc.setFont("helvetica", "italic");
             
-            const message = "As taxas do cliente estão todas corretas e ele pode contar com a Grow BPO e seu sistema AuditGrow para ter a tranquilidade que suas transações estão sendo acompanhadas para que não perca nenhum centavo.";
-            const splitMessage = doc.splitTextToSize(message, 180);
+            const message = "As taxas estao todas corretas. Voce pode contar com a Grow BPO e nosso sistema AuditGrow para ter a tranquilidade de que suas transacoes estao sendo acompanhadas, garantindo que sua empresa nao perca nenhum centavo.";
+            const splitMessage = doc.splitTextToSize(message, 170); // Margem interna na caixa
             
-            // Adicionar uma linha decorativa antes da mensagem
-            doc.setDrawColor(200, 200, 200);
-            doc.line(14, finalY - 8, 196, finalY - 8);
-            
-            doc.text(splitMessage, 14, finalY);
+            doc.text(splitMessage, 19, finalY + 10);
 
             doc.save(`AuditGrow_Conformidade_${clientName.replace(/\s+/g, '_')}.pdf`);
         }
