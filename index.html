@@ -24,7 +24,7 @@
                 <p class="text-slate-500">Compare taxas contratadas vs. praticadas automaticamente.</p>
             </div>
             <div class="flex gap-2">
-                <label class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg cursor-pointer transition flex items-center gap-2">
+                <label class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg cursor-pointer transition flex items-center gap-2 shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                     Importar Relatório XLSX
                     <input type="file" id="fileInput" class="hidden" accept=".xlsx, .xls">
@@ -32,8 +32,13 @@
             </div>
         </header>
 
-        <!-- Configuração de Taxas -->
+        <!-- Informações e Configuração de Taxas -->
         <section class="glass-card rounded-2xl p-6 mb-8 shadow-sm">
+            <div class="mb-6 border-b border-slate-200 pb-6">
+                <label for="clientNameInput" class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Nome do Cliente / Empresa</label>
+                <input type="text" id="clientNameInput" placeholder="Ex: Padaria do João Ltda." class="w-full md:w-1/2 lg:w-1/3 border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 outline-none shadow-sm transition bg-white text-slate-800">
+            </div>
+
             <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 Configurar Taxas de Contrato (%)
@@ -41,58 +46,65 @@
             <div id="rateInputs" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Visa Débito</label>
-                    <input type="number" step="0.01" data-brand="VISA" data-type="DEBITO" value="1.22" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="VISA" data-type="DEBITO" value="1.22" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Visa Crédito à Vista</label>
-                    <input type="number" step="0.01" data-brand="VISA" data-type="CREDITO A VISTA" value="2.11" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="VISA" data-type="CREDITO A VISTA" value="2.11" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Master Débito</label>
-                    <input type="number" step="0.01" data-brand="MASTERCARD" data-type="DEBITO" value="1.22" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="MASTERCARD" data-type="DEBITO" value="1.22" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Master Crédito à Vista</label>
-                    <input type="number" step="0.01" data-brand="MASTERCARD" data-type="CREDITO A VISTA" value="2.11" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="MASTERCARD" data-type="CREDITO A VISTA" value="2.11" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Elo Débito</label>
-                    <input type="number" step="0.01" data-brand="ELO" data-type="DEBITO" value="1.64" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="ELO" data-type="DEBITO" value="1.64" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Elo Crédito à Vista</label>
-                    <input type="number" step="0.01" data-brand="ELO" data-type="CREDITO A VISTA" value="2.95" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="ELO" data-type="CREDITO A VISTA" value="2.95" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-500 uppercase">Amex Crédito à Vista</label>
-                    <input type="number" step="0.01" data-brand="AMEX" data-type="CREDITO A VISTA" value="3.16" class="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
+                    <input type="number" step="0.01" data-brand="AMEX" data-type="CREDITO A VISTA" value="3.16" class="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none bg-slate-50">
                 </div>
             </div>
-            <p class="text-xs text-slate-400 mt-4">* Ajuste as taxas acima antes de importar o arquivo para que a comparação seja imediata.</p>
+            <p class="text-xs text-slate-400 mt-4">* Ajuste as taxas acima e informe o nome do cliente antes de importar o arquivo para que a comparação e relatórios saiam completos.</p>
         </section>
 
         <!-- Dashboards -->
         <div id="dashboard" class="hidden">
-            <div class="mb-6 flex items-center gap-3 text-slate-600 bg-white inline-flex px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #00cc4c;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                <span class="font-semibold text-sm uppercase tracking-wide">Período de Vendas:</span>
-                <span id="salesPeriod" class="font-bold text-slate-800 text-lg">--</span>
+            <div class="flex flex-wrap items-center gap-4 mb-6">
+                <div class="flex items-center gap-3 text-slate-600 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="font-semibold text-sm uppercase tracking-wide">Cliente:</span>
+                    <span id="displayClientName" class="font-bold text-slate-800 text-lg">--</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-600 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #00cc4c;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span class="font-semibold text-sm uppercase tracking-wide">Período:</span>
+                    <span id="salesPeriod" class="font-bold text-slate-800 text-lg">--</span>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-slate-300">
                     <span class="text-slate-500 text-sm">Faturamento Bruto</span>
                     <h3 id="statGross" class="text-2xl font-bold text-slate-800">R$ 0,00</h3>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-green-500">
                     <span class="text-slate-500 text-sm">Faturamento Líquido</span>
                     <h3 id="statNet" class="text-2xl font-bold text-green-600">R$ 0,00</h3>
                 </div>
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-orange-400">
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-orange-400">
                     <span class="text-slate-500 text-sm">Total Pago MDR</span>
                     <h3 id="statMdr" class="text-2xl font-bold text-orange-600">R$ 0,00</h3>
                 </div>
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-purple-400">
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-purple-400">
                     <span class="text-slate-500 text-sm">Total Antecipação</span>
                     <h3 id="statAnticipation" class="text-2xl font-bold text-purple-600">R$ 0,00</h3>
                 </div>
@@ -124,8 +136,8 @@
                         </div>
                     </div>
 
-                    <!-- Botão de Relatório -->
-                    <div id="discrepancyAlert" class="hidden bg-red-50 border border-red-200 rounded-xl p-5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <!-- Botão de Relatório com Erro -->
+                    <div id="discrepancyAlert" class="hidden bg-red-50 border border-red-200 rounded-xl p-5 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
                         <div class="flex items-center gap-4">
                             <div class="bg-red-500 text-white p-3 rounded-full shadow-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -135,9 +147,26 @@
                                 <p class="text-red-600 text-sm" id="discrepancyCountText">Foram encontradas vendas fora da taxa de contrato.</p>
                             </div>
                         </div>
-                        <button onclick="generatePDF()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl text-sm font-bold shadow-lg transition w-full sm:w-auto flex items-center justify-center gap-2">
+                        <button onclick="generateDivergencePDF()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl text-sm font-bold shadow-md transition w-full sm:w-auto flex items-center justify-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                            Baixar Relatório PDF
+                            Baixar Divergências (PDF)
+                        </button>
+                    </div>
+
+                    <!-- Botão de Relatório de Sucesso (Conformidade) -->
+                    <div id="complianceAlert" class="hidden bg-green-50 border border-green-200 rounded-xl p-5 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-500 text-white p-3 rounded-full shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-green-800 text-lg">Tudo Certo!</h4>
+                                <p class="text-green-600 text-sm">Nenhuma divergência nas taxas contratuais foi encontrada.</p>
+                            </div>
+                        </div>
+                        <button onclick="generateCompliancePDF()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl text-sm font-bold shadow-md transition w-full sm:w-auto flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Relatório de Conformidade (PDF)
                         </button>
                     </div>
                 </div>
@@ -153,7 +182,7 @@
                     <div class="bg-blue-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
                         <div class="relative z-10">
                             <h4 class="font-bold opacity-80 uppercase text-xs mb-1">Impacto Financeiro Total</h4>
-                            <p class="text-sm mb-4">O que o cliente perdeu por taxas erradas:</p>
+                            <p class="text-sm mb-4">Prejuízo por taxas divergentes:</p>
                             <span id="totalImpact" class="text-3xl font-black">R$ 0,00</span>
                         </div>
                         <svg class="absolute right-[-20px] bottom-[-20px] opacity-10 w-32 h-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -202,11 +231,9 @@
             return str.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
         }
 
-        // FUNÇÃO MELHORADA PARA CONSOLIDAR PRODUTOS (Resolve o problema do "Pré Pago")
         function getGroupedProduct(type) {
             const t = normalizeString(type);
             if (t.includes('DEBITO') || t.includes('PRE PAGO') || t.includes('PRE-PAGO') || t.includes('PREPAGO')) {
-                // Se por acaso vier "credito pré pago"
                 if (t.includes('CREDITO')) return 'CREDITO A VISTA';
                 return 'DEBITO';
             }
@@ -240,7 +267,6 @@
             if (typeof val === 'number') return val;
             if (!val) return 0;
             let str = val.toString().trim();
-            // Lida com formato pt-BR "1.500,00" -> "1500.00"
             if (str.includes('.') && str.includes(',')) {
                 str = str.replace(/\./g, '').replace(',', '.');
             } else if (str.includes(',')) {
@@ -256,12 +282,10 @@
         function parseDateString(dateStr) {
             if (!dateStr || dateStr === '-') return null;
             if (typeof dateStr === 'number') {
-                // Correção para o formato de número serial do Excel
                 let d = new Date(Math.round((dateStr - 25569) * 86400 * 1000));
                 return new Date(d.getTime() + d.getTimezoneOffset() * 60000);
             }
             if (typeof dateStr === 'string') {
-                // Remove timestamp se estiver no formato "DD/MM/YYYY HH:MM:SS"
                 let datePart = dateStr.trim().split(' ')[0];
                 if (datePart.includes('/')) {
                     let parts = datePart.split('/');
@@ -300,23 +324,19 @@
             let maxDate = null;
 
             data.forEach(row => {
-                // Identificadores base
                 const rawBrand = row['Bandeira'] || row['BANDEIRA'] || row['bandeira'] || 'Outros';
                 const rawProduct = row['Produto'] || row['PRODUTO'] || row['Tipo de Transação'] || row['tipo_transacao'] || '';
                 
-                // Agrupamento limpo (exclui o "pré pago" visualmente)
                 const brand = getGroupedBrand(rawBrand);
                 const product = getGroupedProduct(rawProduct);
                 const key = `${brand} - ${product}`;
 
-                // Valores
                 const grossVal = parseExcelNumber(row['Valor Bruto'] || row['VALOR BRUTO'] || row['valor_bruto']);
                 const netVal = parseExcelNumber(row['Valor Líquido'] || row['VALOR LIQUIDO'] || row['valor_liquido']);
                 const antFee = parseExcelNumber(row['Valor Antecipação'] || row['VALOR ANTECIPACAO'] || row['Antecipação']);
 
-                if (grossVal === 0) return; // Ignora linhas vazias ou sem valor bruto
+                if (grossVal === 0) return; 
 
-                // Ignorar transações malsucedidas (Falha, Cancelada, Recusada) buscando em qualquer coluna (como a coluna S de status)
                 let hasErrorStatus = false;
                 Object.values(row).forEach(val => {
                     const strVal = normalizeString(val);
@@ -325,13 +345,11 @@
                     }
                 });
                 
-                if (hasErrorStatus) return; // Pula esta linha e não contabiliza nas taxas
+                if (hasErrorStatus) return;
 
-                // Capturar a data para definir o período (Forçando visualização na Coluna C / Index 2 como fallback)
                 const keys = Object.keys(row);
                 let rawDate = row['Data da Transação'] || row['DATA'] || row['Data'] || row['Data Venda'] || row['Criado em'];
                 
-                // Se não achar pelo nome, pega forçadamente a 3ª coluna do arquivo (Coluna C)
                 if (!rawDate && keys.length >= 3) {
                     rawDate = row[keys[2]];
                 }
@@ -339,18 +357,16 @@
                 let parsedDate = parseDateString(rawDate);
                 
                 if (parsedDate) {
-                    parsedDate.setHours(0, 0, 0, 0); // Zera as horas para cálculo limpo de mês fechado
+                    parsedDate.setHours(0, 0, 0, 0);
                     if (!minDate || parsedDate < minDate) minDate = parsedDate;
                     if (!maxDate || parsedDate > maxDate) maxDate = parsedDate;
                 }
 
-                // Cálculo da Taxa Praticada por Transação: (1 - (Líquido / Bruto)) * 100
                 const transactionPracticedRate = (1 - (netVal / grossVal)) * 100;
 
                 totalGross += grossVal;
                 totalNet += netVal;
                 totalAnticipation += antFee;
-                // MDR em reais
                 const mdrReais = grossVal - netVal - antFee;
                 totalMdr += mdrReais;
 
@@ -358,7 +374,6 @@
 
                 const contractRate = getContractRate(brand, product);
 
-                // Prepara Sumário para a Tabela
                 if (!summaryByGroup[key]) {
                     summaryByGroup[key] = { 
                         brand: brand,
@@ -372,8 +387,6 @@
                 summaryByGroup[key].gross += grossVal;
                 summaryByGroup[key].net += netVal;
 
-                // Verificação de Discrepância por Transação para o PDF!
-                // Tolerância de 0.05% para evitar diferença de dízima de arredondamento
                 if (contractRate !== null && transactionPracticedRate > (contractRate + 0.05)) {
                     let transDateFormatted = parsedDate ? parsedDate.toLocaleDateString('pt-BR') : '-';
 
@@ -392,7 +405,6 @@
 
             let periodStr = "Período não identificado";
             if (minDate && maxDate) {
-                // Checa se as transações correspondem a um mês perfeitamente fechado
                 const isSameMonth = minDate.getMonth() === maxDate.getMonth() && minDate.getFullYear() === maxDate.getFullYear();
                 const isFirstDay = minDate.getDate() === 1;
                 
@@ -410,6 +422,11 @@
         }
 
         function updateUI(gross, net, mdr, ant, isAnticipated, periodStr) {
+            // Preencher Nome do Cliente
+            const clientNameInput = document.getElementById('clientNameInput').value.trim();
+            const clientName = clientNameInput !== "" ? clientNameInput : "Cliente Não Informado";
+            document.getElementById('displayClientName').innerText = clientName;
+
             document.getElementById('salesPeriod').innerText = periodStr;
             document.getElementById('statGross').innerText = formatCurrency(gross);
             document.getElementById('statNet').innerText = formatCurrency(net);
@@ -424,11 +441,9 @@
                 const item = summaryByGroup[key];
                 const contract = item.contractRate || 0;
                 
-                // Cálculo da taxa efetiva baseado nos TOTAIS como solicitado: Divida o valor líquido pelo valor bruto
                 const effectivePracticedRate = item.gross > 0 ? (1 - (item.net / item.gross)) * 100 : 0;
                 const diff = effectivePracticedRate - contract;
                 
-                // Impacto calculado sobre o faturamento total daquele grupo
                 const impact = item.gross * (diff / 100);
                 if (impact > 0) totalLoss += impact;
 
@@ -461,41 +476,44 @@
                     Nenhuma antecipação detectada
                    </div>`;
 
-            // Exibir Alerta de PDF se houver discrepâncias
+            // Lógica para alternar entre alerta de erro e conformidade
+            const alertError = document.getElementById('discrepancyAlert');
+            const alertSuccess = document.getElementById('complianceAlert');
+
             if (discrepancies.length > 0) {
                 document.getElementById('discrepancyCountText').innerText = `Encontramos ${discrepancies.length} transações com taxa acima do contrato.`;
-                document.getElementById('discrepancyAlert').classList.remove('hidden');
+                alertError.classList.remove('hidden');
+                alertSuccess.classList.add('hidden');
             } else {
-                document.getElementById('discrepancyAlert').classList.add('hidden');
+                alertError.classList.add('hidden');
+                alertSuccess.classList.remove('hidden');
             }
 
             emptyState.classList.add('hidden');
             dashboard.classList.remove('hidden');
         }
 
-        async function generatePDF() {
-            if(discrepancies.length === 0) {
-                alert("Nenhuma divergência encontrada para gerar o relatório.");
-                return;
-            }
+        async function generateDivergencePDF() {
+            if(discrepancies.length === 0) return;
 
-            // Acessando jsPDF a partir da janela (CDN)
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('landscape'); // Paisagem para caber mais colunas
+            const doc = new jsPDF('landscape');
             
+            const clientName = document.getElementById('displayClientName').innerText;
+            const period = document.getElementById('salesPeriod').innerText;
+
             doc.setFontSize(18);
-            doc.setTextColor(0, 51, 34); // Verde Stone
+            doc.setTextColor(0, 51, 34); 
             doc.text("RELATÓRIO DE CONTESTAÇÃO DE TAXAS - AUDITGROW STONE", 14, 22);
             
             doc.setFontSize(10);
             doc.setTextColor(100, 100, 100);
-            const period = document.getElementById('salesPeriod').innerText;
-            doc.text(`Período Analisado: ${period}`, 14, 30);
-            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 35);
-            doc.text(`Total de Transações Divergentes: ${discrepancies.length}`, 14, 40);
-            doc.text(`Prejuízo Financeiro Estimado nas Transações Listadas: ${document.getElementById('totalImpact').innerText}`, 14, 45);
+            doc.text(`Cliente: ${clientName}`, 14, 30);
+            doc.text(`Período Analisado: ${period}`, 14, 35);
+            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 40);
+            doc.text(`Total de Transações Divergentes: ${discrepancies.length}`, 14, 45);
+            doc.text(`Prejuízo Financeiro Estimado nas Transações Listadas: ${document.getElementById('totalImpact').innerText}`, 14, 50);
 
-            // Preparando as linhas da tabela
             const tableData = discrepancies.map(d => [
                 d.date,
                 `${d.brand} / ${d.product}`,
@@ -506,9 +524,8 @@
                 formatCurrency(d.loss)
             ]);
 
-            // Inserindo a tabela no PDF
             doc.autoTable({
-                startY: 50,
+                startY: 55,
                 head: [['Data', 'Bandeira / Produto', 'Valor Bruto', 'Valor Líquido', 'Taxa Contrato', 'Taxa Praticada', 'Diferença Cobrada (R$)']],
                 body: tableData,
                 theme: 'striped',
@@ -519,12 +536,85 @@
                     3: { halign: 'right' },
                     4: { halign: 'center' },
                     5: { halign: 'center' },
-                    6: { halign: 'right', textColor: [200, 0, 0], fontStyle: 'bold' } // Coluna de prejuízo em vermelho
+                    6: { halign: 'right', textColor: [200, 0, 0], fontStyle: 'bold' } 
                 }
             });
 
-            // Forçar download
-            doc.save("contestacao_taxas_stone.pdf");
+            doc.save(`AuditGrow_Divergencias_${clientName.replace(/\s+/g, '_')}.pdf`);
+        }
+
+        async function generateCompliancePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('portrait');
+            
+            const clientName = document.getElementById('displayClientName').innerText;
+            const period = document.getElementById('salesPeriod').innerText;
+
+            doc.setFontSize(18);
+            doc.setTextColor(0, 180, 70); // Verde Sucesso
+            doc.text("RELATÓRIO DE AUDITORIA - CONFORMIDADE DE TAXAS", 14, 22);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Cliente: ${clientName}`, 14, 30);
+            doc.text(`Período Analisado: ${period}`, 14, 35);
+            doc.text(`Data de Geração: ${new Date().toLocaleString('pt-BR')}`, 14, 40);
+            
+            // Resumo Financeiro
+            doc.setFontSize(14);
+            doc.setTextColor(0, 51, 34);
+            doc.text("Resumo Financeiro", 14, 55);
+
+            doc.setFontSize(11);
+            doc.setTextColor(50, 50, 50);
+            doc.text(`Faturamento Bruto: ${document.getElementById('statGross').innerText}`, 14, 65);
+            doc.text(`Faturamento Líquido: ${document.getElementById('statNet').innerText}`, 14, 72);
+            doc.text(`Total Pago em MDR: ${document.getElementById('statMdr').innerText}`, 14, 79);
+            doc.text(`Total Antecipação: ${document.getElementById('statAnticipation').innerText}`, 14, 86);
+
+            // Tabela de Resumo de Taxas
+            const summaryData = Object.keys(summaryByGroup).map(key => {
+                const item = summaryByGroup[key];
+                const contract = item.contractRate || 0;
+                const effectivePracticedRate = item.gross > 0 ? (1 - (item.net / item.gross)) * 100 : 0;
+                return [
+                    key,
+                    `${contract.toFixed(2)}%`,
+                    `${effectivePracticedRate.toFixed(2)}%`,
+                    'OK / Conforme'
+                ];
+            });
+
+            doc.autoTable({
+                startY: 100,
+                head: [['Bandeira / Produto', 'Taxa de Contrato', 'Taxa Efetiva', 'Status']],
+                body: summaryData,
+                theme: 'striped',
+                headStyles: { fillColor: [0, 180, 70], textColor: [255,255,255] },
+                styles: { fontSize: 10, cellPadding: 4 },
+                columnStyles: {
+                    1: { halign: 'center' },
+                    2: { halign: 'center' },
+                    3: { halign: 'center', textColor: [0, 150, 50], fontStyle: 'bold' } 
+                }
+            });
+
+            // Mensagem da Grow BPO
+            const finalY = doc.lastAutoTable.finalY + 25;
+            doc.setFontSize(11);
+            doc.setTextColor(0, 51, 34);
+            doc.setFont("helvetica", "italic");
+            
+            const message = "As taxas do cliente estão todas corretas e ele pode contar com a Grow BPO e seu sistema AuditGrow para ter a tranquilidade que suas transações estão sendo acompanhadas para que não perca nenhum centavo.";
+            const splitMessage = doc.splitTextToSize(message, 180);
+            
+            // Adicionar uma linha decorativa antes da mensagem
+            doc.setDrawColor(200, 200, 200);
+            doc.line(14, finalY - 8, 196, finalY - 8);
+            
+            doc.text(splitMessage, 14, finalY);
+
+            doc.save(`AuditGrow_Conformidade_${clientName.replace(/\s+/g, '_')}.pdf`);
         }
     </script>
 </body>
